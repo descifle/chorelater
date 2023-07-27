@@ -1,0 +1,440 @@
+$introText: 1.067rem; $text:.940rem; $headerText: 1.070rem; $contentSpace: 3rem; $contentSpaceInline: 1.5rem; $contentSpaceInput: .3rem;
+$windowPadding: 24rem; $modalFormPadding: 4rem;
+
+$textColor: #333447; $blue: #0077C7; $darkBlue: #215184; $focusBlue: #7ceffc; $disabledBlue: #adc8e7; $secondaryBlue: #E3F1F9;
+$red: #D50057; $error: #c32958; $errorBackground: #f3d4dd; $grey: #d7d9db; $modalBackground: #70707E; $closeButton: #333448;
+$backgroundColor: #203E5B;
+$contentSpacing: 2rem; $contentSpacingInline: .5rem;
+$defaultFont: .8rem; $largeFont: 1.2rem;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+html, #root {
+    background-color: $backgroundColor;
+    color: white;
+
+    .hidden {
+        display: none;
+    }
+}
+
+header {
+    display: flex;
+    align-items: center;
+    height: 5rem;
+    background-color: $textColor;
+    color: white;
+    padding: 0 $windowPadding;
+
+    .logo {
+        height: 40px;
+        width: auto;
+        margin-right: .4rem;
+    }
+
+    .logo-text_name {
+        font-weight: 600;
+    }
+
+    .logo-text_orrick {
+        color: rgba(255, 255, 255, 0.616);
+    }
+}
+
+main {
+    height: 100%;
+    padding: 0 $windowPadding $contentSpace $windowPadding;
+}
+
+.calendar {
+    display: flex;
+    padding: $contentSpacing 0;
+
+    .day.active {
+        border: solid 1px rgb(25, 228, 228);
+        background-color: rgba(25, 228, 228, 0.348);
+
+        > div {
+            width: 100%;
+            border-radius: .2rem;
+        }
+    }
+
+    .day {
+        cursor: pointer;
+        aspect-ratio : 1 / 1;
+        width: calc(100% / 7);
+        padding: $contentSpacingInline;
+        background-color: white;
+        color: black;
+        border: solid 1px black;
+        text-align: center;
+        font-weight: bold;
+        font-size: $defaultFont;
+
+        div {
+            margin: .4rem 0;
+            width: 100%;
+            background-color: white;
+            border: solid 1px black;
+            border-radius: .2rem;
+        }
+    }
+}
+
+.day-chore {
+    padding: .2rem;
+    border-radius: .4rem;
+    cursor: pointer;
+}
+
+.day-chore.active {
+    background-color: $grey;
+}
+
+.chore-handler {
+    margin-bottom: $contentSpacing;
+
+    .secondary-button {
+        margin-left: $contentSpaceInline;
+    }
+}
+
+.activity  {
+    display: flex;
+    justify-content: space-between;
+
+    > div {
+        width: calc((100% / 7) * 3);
+    }   
+
+    .daily, .notes {
+        > div {
+            border-radius: .3rem;
+            background-color: white;
+            height: 20rem;
+            padding: $contentSpacingInline;
+            color: black;
+        }
+    }
+    
+    .notes {
+    }
+}
+
+.form-container {
+    min-height: 40rem;
+    text-align: center;
+    padding: $contentSpace 4rem;
+    border-radius: .8rem;
+    color: black;
+
+    .intro {
+        line-height: 1.47;
+        font-size: $introText;
+        text-align: left;
+    }
+
+    label {
+        text-align: left;
+    }
+
+    hr {
+        margin: $contentSpaceInline 0;
+        border: solid $grey .6px;
+    }
+
+    .input-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin: $contentSpaceInline 0;
+
+        label {
+            margin: $contentSpaceInput 0;
+            font-size: $headerText;
+            font-weight: 600;
+        }
+
+        textarea {
+            height: 7rem;
+        }
+
+        input {
+            height: 2.5rem;
+            border: none;
+            border: solid $textColor 1px;
+        }
+
+        textarea, input {
+            font-family: 'Open Sans', sans-serif;
+            font-size: $text;
+            border-radius: .28rem;
+            padding: .4rem .8rem;
+        }
+
+        .error {
+            position: absolute;
+            left: 0;
+            bottom: -1.3rem;
+            font-size: .8rem;
+            color: $error;
+        }
+    }
+
+    .input-container.error-field {
+        textarea, input {
+            border: none;
+            border: solid $error 1px;
+        }
+    }
+
+    .error-output {
+        display: flex;
+        align-items: center;
+        background-color: $errorBackground;
+        margin: $contentSpaceInline 0;
+        padding: 1.2rem .8rem;
+        font-weight: bold;
+        border-radius: .4rem;
+        opacity: 1;
+        transition: opacity .3s ease-in-out;
+
+        .exclamation {
+            padding-right: .8rem;
+        }
+
+        .close {
+            margin-left: auto;
+            cursor: pointer;
+        }
+
+        img {
+            height: 1.25rem;
+            width: auto;
+        }
+    }
+}
+
+.primary-button {
+        cursor: pointer;
+        height: 4rem;
+        width: 12rem;
+        border: none;
+        padding: 0;
+        margin: 0;
+        // margin: $contentSpace auto 0 auto;
+        color: white;
+        background-color: $blue;
+        border-radius: .2rem;
+        font-weight: 600;
+        font-size: $introText;
+
+        &:active {
+            background-color: $darkBlue;
+        }
+
+        &:focus {
+            box-shadow: 0px 0px 8px 1px #41F2FF;
+        }
+
+        &:disabled {
+            background-color: $disabledBlue;
+        }
+    }
+
+.secondary-button {
+    cursor: pointer;
+    height: 4rem;
+    width: 12rem;
+    border: solid 1px $blue;
+    padding: 0;
+    margin: 0;
+    color: $blue;
+    background-color: white;
+    border-radius: .2rem;
+    font-weight: 600;
+    font-size: $introText;
+
+    &:active {
+        background-color: $secondaryBlue;
+    }
+
+    &:hover {
+        background-color: $secondaryBlue;
+    }
+
+    &:focus {
+        box-shadow: 0px 0px 5px $focusBlue;
+        border: solid $blue 1px;
+    }
+
+    &:disabled {
+        cursor: default;
+        border: none;
+        background-color: $modalBackground;
+        color: black;
+    }
+
+    img {
+        height: 1.25rem;
+        width: auto;
+        margin: 0 .75rem;
+        color: $blue;
+    }
+}
+
+.delete-button {
+    cursor: pointer;
+    padding: 0 .2rem;
+    margin: 0 .2rem;
+    color: white;
+    background-color: $error;
+    border-radius: .2rem;
+    font-weight: 600;
+    font-size: $introText;
+
+    &:disabled {
+        cursor: default;
+        // border: none;
+        background-color: $modalBackground;
+        color: black;
+    }
+}
+
+img {
+    height: 100%;
+}
+
+// loading css
+.loading-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .loading-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    height: 4rem;
+    width: 4rem;
+    padding: 0;
+    // margin: $contentSpaceInline auto $contentSpace auto;
+    border: 8px solid $blue;
+    border-radius: 50%;
+    animation: loading-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: $blue transparent transparent transparent;
+  }
+  .loading-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .loading-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .loading-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes loading-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+}
+
+.modal {
+    z-index: 99;
+    display: block;
+    background-color: $modalBackground;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: inherit;
+    padding-top: $contentSpace;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .5s ease-in-out;
+
+    form {
+        position: relative;
+        background-color: white;
+        max-width: 50rem;
+        padding: $modalFormPadding;
+        margin: auto;
+        border-radius: .8rem;
+        text-align: left;
+
+        .modal-close {
+            position: absolute;
+            cursor: pointer;
+            top: -1rem;
+            right: -1rem;
+            background-color: $closeButton;
+            color: white;
+            border-radius: 50%;
+            height: 2rem;
+            width: 2rem;
+        }
+
+        button {
+            margin: $contentSpaceInline 0 0 0;
+        }
+    }
+
+    .error {
+        color: $error;
+    }
+
+    progress.error {
+        accent-color: $error;
+    }
+
+    h4 {
+        margin: $contentSpaceInline 0;
+        font-weight: 400;
+        font-size: $headerText;
+    }
+
+    progress {
+        width: 100%;
+    }
+
+    .progress-percent {
+        font-weight: bold;
+        font-size: .8rem;
+    }
+
+    .progress-text {
+        font-size: $text;
+    }
+
+    .secondary-button {
+        margin: 0 auto 0 auto;
+    }
+
+    .modalimg {
+        width: 0;
+        height: 0;
+    }
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 40rem) {
+    .activity  {
+        display: flex;
+        flex-direction: column;
+        justify-content: initial;
+
+        > div {
+            width: 100%;
+        }
+    }
+}
