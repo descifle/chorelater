@@ -47,9 +47,13 @@ main {
 
 .calendar {
     display: flex;
+    align-items: center;
     padding: $contentSpacing 0;
 
     .day.active {
+        display: block;
+        height: 4rem;
+        width: calc(100% * 7);
         border: solid 1px rgb(25, 228, 228);
         background-color: rgba(25, 228, 228, 0.348);
 
@@ -61,8 +65,8 @@ main {
 
     .day {
         cursor: pointer;
-        aspect-ratio : 1 / 1;
-        width: calc(100% / 7);
+        aspect-ratio: initial;
+        display: none;
         padding: $contentSpacingInline;
         background-color: white;
         color: black;
@@ -79,6 +83,21 @@ main {
             border-radius: .2rem;
         }
     }
+
+    svg {
+        cursor: pointer;
+        height: 3rem; 
+        fill: white;
+
+        &:hover, &:active {
+            fill: $grey;
+        }
+    }
+
+    .left-arrow, .right-arrow {
+        // height: 3rem;
+        width: 100%;
+    }
 }
 
 .day-chore {
@@ -94,6 +113,10 @@ main {
 .chore-handler {
     margin-bottom: $contentSpacing;
 
+    .primary-button {
+        width: 100%;
+    }
+
     .secondary-button {
         margin-left: $contentSpaceInline;
     }
@@ -101,11 +124,12 @@ main {
 
 .activity  {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: initial;
 
     > div {
-        width: calc((100% / 7) * 3);
-    }   
+        width: 100%;
+    }
 
     .daily, .notes {
         > div {
@@ -116,15 +140,12 @@ main {
             color: black;
         }
     }
-    
-    .notes {
-    }
 }
 
 .form-container {
     min-height: 40rem;
     text-align: center;
-    padding: $contentSpace 4rem;
+    padding: 0;
     border-radius: .8rem;
     color: black;
 
@@ -345,6 +366,7 @@ img {
 
 .modal {
     z-index: 99;
+    overflow: auto;
     display: block;
     background-color: $modalBackground;
     position: fixed;
@@ -353,7 +375,6 @@ img {
     width: 100%;
     height: 100%;
     padding: inherit;
-    padding-top: $contentSpace;
     text-align: center;
     opacity: 0;
     transition: opacity .5s ease-in-out;
@@ -362,7 +383,7 @@ img {
         position: relative;
         background-color: white;
         max-width: 50rem;
-        padding: $modalFormPadding;
+        padding: ($modalFormPadding / 2);
         margin: auto;
         border-radius: .8rem;
         text-align: left;
@@ -427,14 +448,68 @@ img {
     align-items: center;
 }
 
-@media (max-width: 40rem) {
+@media (min-width: 40rem) {
+
+    .calendar {
+        display: flex;
+        padding: $contentSpacing 0;
+    
+        .day.active {
+            border: solid 1px rgb(25, 228, 228);
+            background-color: rgba(25, 228, 228, 0.348);
+            width: calc(100% / 7);
+            height: auto;
+    
+            > div {
+                width: 100%;
+                border-radius: .2rem;
+            }
+        }
+    
+        .day {
+            display: block;
+            cursor: pointer;
+            aspect-ratio : 1 / 1;
+            width: calc(100% / 7);
+            padding: $contentSpacingInline;
+            background-color: white;
+            color: black;
+            border: solid 1px black;
+            text-align: center;
+            font-weight: bold;
+            font-size: $defaultFont;
+    
+            div {
+                margin: .4rem 0;
+                width: 100%;
+                background-color: white;
+                border: solid 1px black;
+                border-radius: .2rem;
+            }
+        }
+
+        svg {
+            display: none;
+        }
+    }
+
     .activity  {
         display: flex;
-        flex-direction: column;
-        justify-content: initial;
-
+        flex-direction: row;
+        justify-content: space-between;
+    
         > div {
-            width: 100%;
+            width: calc((100% / 7) * 3);
+        }   
+    }
+
+    .form-container {
+        padding: $contentSpace 4rem;
+    }
+
+    .modal {
+        form {
+            padding: $modalFormPadding;
         }
     }
 }

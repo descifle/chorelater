@@ -31,7 +31,10 @@ const FunctionalCalendar = () => {
         { day: "FRI", name: "Friday" }
     ]
 
-    const onDayClick = (dayOfWeek) => setDay(dayOfWeek)
+    const setActiveDay = (dayOfWeek) => {
+        setDay(dayOfWeek)
+        deActivateChore()
+    }
 
     const openFormModal = async (value) => {
         setOpen(value)
@@ -46,7 +49,7 @@ const FunctionalCalendar = () => {
         setActiveChore(chores.filter((c) => c.id === id)[0])
     }
 
-    const deActivateChore = (id) => {
+    const deActivateChore = () => {
         setActiveChore({ id: "" })
     }
 
@@ -57,41 +60,72 @@ const FunctionalCalendar = () => {
         setChores(collection)
     }
 
-    const setActiveDay = (e) => {
+    const onDayClick = (e) => {
         // passes the value of the div text first three characters to day state 
         if(e.target.innerText === "chores") {
-            onDayClick(e.target.parentElement.innerText.substring(0, 3))
+            setActiveDay(e.target.parentElement.innerText.substring(0, 3))
         } else {
-            onDayClick(e.target.innerText.substring(0, 3))
+            setActiveDay(e.target.innerText.substring(0, 3))
         }
-        
-        deActivateChore()
     }
 
-    const mobileNavigation = () => {
-        
+    const mobileNavigation = (direction) => {
+        // find the index of the current day
+        const index = days.findIndex(d => d.day === day)
+
+        if(index === 0) {
+            console.log(days.length)
+            if(direction === "right") setActiveDay(days[index + 1].day)
+            else setActiveDay(days[days.length - 1].day)
+        } else if(index === 6) {
+            if(direction === "right") setActiveDay(days[0].day)
+            else setActiveDay(days[index - 1].day)
+        } else {
+            if(direction === "right") setActiveDay(days[index + 1].day)
+            else setActiveDay(days[index - 1].day)
+        }
     }
+
+
+    const LeftArrow = () => (
+        <svg onClick={() => mobileNavigation("left")} fill="inherit" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="50 0 199.404 199.404">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+            <g id="SVGRepo_iconCarrier"> <g> <polygon className="left-arrow" points="135.412,0 35.709,99.702 135.412,199.404 163.695,171.119 92.277,99.702 163.695,28.285 "/> </g> </g>
+        </svg>
+    )
+    const RightArrow = () => (
+        <svg onClick={() => mobileNavigation("right")} fill="inherit" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" 
+            width="800px" height="800px" viewBox="-45 0 199.404 199.404"
+            >
+        <g>
+            <polygon className="right-arrow" points="63.993,199.404 163.695,99.702 63.993,0 35.709,28.285 107.127,99.702 35.709,171.119 	"/>
+        </g>
+        </svg>
+    )
 
     return (
         <>
         { open ? <Modal handleModalClose={openFormModal} days={days} day={day} /> : "" }
             <h1 className="text-center">Choralater</h1>
             <div className="calendar">
+                <LeftArrow />
                 {days.map((dayItem, i) => {
                     return (
                         <div 
                             className={ dayItem.day === day ? "active day": "day" } 
                             key={i} 
-                            onClick={(e) => setActiveDay(e)}
+                            onClick={(e) => onDayClick(e)}
                             >
                             {dayItem.day}
                             {chores.filter(c => c.day === dayItem.day).length > 0 ? <div>chores</div> : null }
                         </div>
                     )
                 })}
+                <RightArrow />
             </div>
             <div className="chore-handler">
-                <button className="primary-button" onClick={() => openFormModal(true)}>ADD</button>
+                <button className="primary-button" onClick={() => openFormModal(true)}>ADD CHORE</button>
             </div>
             <div className="activity">
                 <div className="daily">
